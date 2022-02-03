@@ -1,7 +1,17 @@
-class Playlist(list):
+class Playlist():
     def __init__(self, nome, programas):
         self.nome = nome
-        super().__init__(programas)
+        self._programas = programas
+
+    def __getitem__(self, item):
+        return self._programas[item]
+
+    @property
+    def listagem(self):
+        return self._programas
+
+    def __len__(self):
+        return len(self._programas)
 
 class Programa:
     def __init__(self, nome, ano):
@@ -67,7 +77,7 @@ band_of_brothers.dar_like()
 print()
 print()
 
-filmes_e_series = [vingadores, house_of_cards, band_of_brothers, a_origem]
+filmes_e_series = [house_of_cards, band_of_brothers, a_origem]
 
 playlist_fim_de_semana = Playlist('Fim de semana', filmes_e_series)
 
@@ -78,4 +88,5 @@ for programa in playlist_fim_de_semana:
     print(programa)
 
 print()
-print(f'Tá ou não tá? {a_origem in playlist_fim_de_semana}')
+
+len(playlist_fim_de_semana)
