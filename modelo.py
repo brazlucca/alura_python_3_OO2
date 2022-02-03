@@ -1,60 +1,81 @@
+class Playlist(list):
+    def __init__(self, nome, programas):
+        self.nome = nome
+        super().__init__(programas)
 
-class Filme:
+class Programa:
+    def __init__(self, nome, ano):
+        self._nome = nome.title()
+        self.ano = ano
+        self._likes = 0
+
+    @property
+    def likes(self):
+        return self._likes
+
+    def dar_like(self):
+        self._likes += 1
+
+    @property
+    def nome(self):
+        return self._nome
+
+    @nome.setter
+    def nome(self, novo_nome):
+        self._nome = novo_nome.title()
+
+    def __str__(self):
+        return f'{self._nome} - {self.ano} - {self._likes}'
+
+class Filme(Programa):
     def __init__(self, nome, ano, duracao):
-        self.__nome = nome.title()
-        self.ano = ano
+        super().__init__(nome, ano)
         self.duracao = duracao
-        self.__likes = 0
 
-    @property
-    def likes(self):
-        return self.__likes
+    def __str__(self):
+        return f'{self._nome} - {self.ano} - {self.duracao} min - {self._likes} likes'
 
-    def dar_like(self):
-        self.__likes += 1
-
-    @property
-    def nome(self):
-        return self.__nome
-
-    @nome.setter
-    def nome(self, novo_nome):
-        self.__nome = novo_nome.title()
-
-class Serie:
+class Serie(Programa):
     def __init__(self, nome, ano, temporadas):
-        self.__nome = nome.title()
-        self.ano = ano
+        super().__init__(nome, ano)
         self.temporadas = temporadas
-        self.__likes = 0
 
-    def dar_like(self):
-        self.likes += 1
+    def __str__(self):
+        return f'{self._nome} - {self.ano} - {self.temporadas} temporadas - {self._likes} likes'
 
-    @property
-    def likes(self):
-        return self.__likes
-
-    def dar_like(self):
-        self.__likes += 1
-
-    @property
-    def nome(self):
-        return self.__nome
-
-    @nome.setter
-    def nome(self, novo_nome):
-        self.__nome = novo_nome.title()
+#####---_#####    MAIN    #####----#####
 
 vingadores = Filme('vingadores - guerra infinita', 2018, 160)
+a_origem = Filme('a origem', 2014, 210)
+house_of_cards = Serie('sons of anarchy', 2018, 3)
+band_of_brothers = Serie('band of brothers', 2004, 1)
+
 vingadores.dar_like()
-print(f'Nome: {vingadores.nome} - Ano: {vingadores.ano} - Duracao: {vingadores.duracao} - Likes: {vingadores.likes}')
+a_origem.dar_like()
+a_origem.dar_like()
+a_origem.dar_like()
+a_origem.dar_like()
 
-house_of_cards = Serie('house of cards', 2018, 3)
-house_of_cards.nome = 'sons of anarchy'
 house_of_cards.dar_like()
 house_of_cards.dar_like()
-print(f'Nome: {house_of_cards.nome} - Ano: {house_of_cards.ano} - Temporadas: {house_of_cards.temporadas} - Likes: {house_of_cards.likes}')
+band_of_brothers.dar_like()
+band_of_brothers.dar_like()
+band_of_brothers.dar_like()
+band_of_brothers.dar_like()
+band_of_brothers.dar_like()
 
+print()
+print()
 
+filmes_e_series = [vingadores, house_of_cards, band_of_brothers, a_origem]
 
+playlist_fim_de_semana = Playlist('Fim de semana', filmes_e_series)
+
+print(f'Nome da playlist: {playlist_fim_de_semana.nome}')
+print(f'Tamanho da playlist: {len(playlist_fim_de_semana)}')
+print()
+for programa in playlist_fim_de_semana:
+    print(programa)
+
+print()
+print(f'Tá ou não tá? {a_origem in playlist_fim_de_semana}')
